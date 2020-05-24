@@ -1,0 +1,1180 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/17/2020 12:11:36 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MANIK"
+  DTS:CreatorName="Manik\Manik325"
+  DTS:DTSID="{0323F229-484B-4A63-B45E-B6F41EA640DC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="TopRatingDirectorActor_Fact"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{8B858DFC-8204-4A79-88B4-C4E95B479FAD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E1B7C0E7-A6A0-4919-8602-F1580304AF25}"
+      DTS:ObjectName="MANIK\SQLEXPRESS.IMDB_DW_NEW1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=MANIK\SQLEXPRESS;Initial Catalog=IMDB_DW_NEW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Fact Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7B3DE9D5-6316-4F0B-8738-C87E8142C54A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Fact Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Fact Data Flow Task\Actor Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Actor Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Actor_Dim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Actor_Dim]) [refTable]
+where [refTable].[actor_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ActorKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="actor_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="movies" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="name" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="gender" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[ActorID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Fact Data Flow Task\Actor Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input].Columns[ActorID]"
+                      cachedDataType="i4"
+                      cachedName="ActorID"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[ActorID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">actor_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Match Output].Columns[ActorKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Match Output].Columns[ActorKey]"
+                      name="ActorKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ActorKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Fact Data Flow Task\Director Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Director Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Director_Dim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Director_Dim]) [refTable]
+where [refTable].[director_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DirectorKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="director_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="movies" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="name" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[DirectorID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Fact Data Flow Task\Director Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input].Columns[DirectorID]"
+                      cachedDataType="i4"
+                      cachedName="DirectorID"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[DirectorID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">director_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Match Output].Columns[DirectorKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Match Output].Columns[DirectorKey]"
+                      name="DirectorKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DirectorKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Fact Data Flow Task\IMDB OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="IMDB OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select b.DirectorID,b.MovieID,b.ActorID,a.num_movies,a.max_rating from
+
+(select m.year, mg.genre,count(mg.movie_id) as num_movies,max(m.rank) as max_rating 
+from [IMDB_New].[dbo].[movies_genres] mg inner join [IMDB_New].[dbo].[movies] m 
+on mg.movie_id=m.id group by m.year,mg.genre)a 
+
+inner join 
+
+(select d.id as DirectorID,m.id as MovieID,ac.id as ActorID,m.year,m.rank,mg.genre,concat(d.first_name,' ',d.last_name) as director, 
+concat(ac.first_name,' ',ac.last_name) as actor, ac.gender as gender 
+from [IMDB_New].[dbo].[movies] m inner join [IMDB_New].[dbo].[movies_genres] mg 
+on mg.movie_id = m.id
+inner join [IMDB_New].[dbo].[movies_directors] md
+on mg.movie_id = md.movie_id
+inner join [IMDB_New].[dbo].[directors] d
+on md.director_id = d.id
+inner join [IMDB_New].[dbo].[roles] ro
+on m.id = ro.movie_id
+inner join [IMDB_New].[dbo].[actors] ac
+on ro.actor_id=ac.id where ro.role IS NOT NULL)b
+
+on a.year = b.year and a.max_rating = b.rank and a.genre = b.genre
+where b.rank!='' and b.director is NOT NULL and b.actor is NOT NULL order by a.year desc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[DirectorID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DirectorID]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[DirectorID]"
+                      name="DirectorID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[MovieID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MovieID]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[MovieID]"
+                      name="MovieID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[ActorID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ActorID]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[ActorID]"
+                      name="ActorID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[num_movies]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[num_movies]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[num_movies]"
+                      name="num_movies"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[max_rating]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[max_rating]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[max_rating]"
+                      name="max_rating"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DirectorID]"
+                      dataType="i4"
+                      name="DirectorID" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MovieID]"
+                      dataType="i4"
+                      name="MovieID" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ActorID]"
+                      dataType="i4"
+                      name="ActorID" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[num_movies]"
+                      dataType="i4"
+                      name="num_movies" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[max_rating]"
+                      dataType="r8"
+                      name="max_rating" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DirectorID]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DirectorID]"
+                      name="DirectorID" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MovieID]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MovieID]"
+                      name="MovieID" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ActorID]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ActorID]"
+                      name="ActorID" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[num_movies]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[num_movies]"
+                      name="num_movies" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[max_rating]"
+                      dataType="r8"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[max_rating]"
+                      name="max_rating" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Fact Data Flow Task\Movies Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Movies Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Movie_Dim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Movie_Dim]) [refTable]
+where [refTable].[movie_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="MovieKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="movie_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="name" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="year" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="rank" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="genre" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[MovieID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Fact Data Flow Task\Movies Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input].Columns[MovieID]"
+                      cachedDataType="i4"
+                      cachedName="MovieID"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[MovieID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">movie_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Match Output].Columns[MovieKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Match Output].Columns[MovieKey]"
+                      name="MovieKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">MovieKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="TopRatingDirectorActor_Fact OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TopRatingDirectorActor_Fact]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].Columns[num_movies]"
+                      cachedDataType="i4"
+                      cachedName="num_movies"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[num_movies]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[num_movies]" />
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].Columns[max_rating]"
+                      cachedDataType="r8"
+                      cachedName="max_rating"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[max_rating]"
+                      lineageId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output].Columns[max_rating]" />
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MovieKey]"
+                      cachedDataType="i4"
+                      cachedName="MovieKey"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MovieKey]"
+                      lineageId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Match Output].Columns[MovieKey]" />
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ActorKey]"
+                      cachedDataType="i4"
+                      cachedName="ActorKey"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ActorKey]"
+                      lineageId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Match Output].Columns[ActorKey]" />
+                    <inputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DirectorKey]"
+                      cachedDataType="i4"
+                      cachedName="DirectorKey"
+                      externalMetadataColumnId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DirectorKey]"
+                      lineageId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Match Output].Columns[DirectorKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DirectorKey]"
+                      dataType="i4"
+                      name="DirectorKey" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MovieKey]"
+                      dataType="i4"
+                      name="MovieKey" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ActorKey]"
+                      dataType="i4"
+                      name="ActorKey" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[num_movies]"
+                      dataType="i4"
+                      name="num_movies" />
+                    <externalMetadataColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[max_rating]"
+                      dataType="r8"
+                      name="max_rating" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Fact Data Flow Task.Paths[Lookup Match Output]"
+              endId="Package\Fact Data Flow Task\Actor Lookup.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Fact Data Flow Task\Movies Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Fact Data Flow Task.Paths[Lookup Match Output1]"
+              endId="Package\Fact Data Flow Task\Director Lookup.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Fact Data Flow Task\Actor Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Fact Data Flow Task.Paths[Lookup Match Output2]"
+              endId="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Fact Data Flow Task\Director Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Fact Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Fact Data Flow Task\Movies Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Fact Data Flow Task\IMDB OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="174.4,41.6"
+          Id="Package\Fact Data Flow Task"
+          TopLeft="256.000004359654,140.705884326288" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Fact Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Fact Data Flow Task\IMDB OLE DB Source"
+          TopLeft="127.428573598667,67.2941185908334" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Fact Data Flow Task\Director Lookup"
+          TopLeft="628.571439275936,382.352946538826" />
+        <NodeLayout
+          Size="308.8,41.6"
+          Id="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination"
+          TopLeft="306.40000504085,490.447064400379" />
+        <NodeLayout
+          Size="140.8,41.6"
+          Id="Package\Fact Data Flow Task\Actor Lookup"
+          TopLeft="562.857152442543,261.223533075326" />
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package\Fact Data Flow Task\Movies Lookup"
+          TopLeft="336.571434303206,165.788237619235" />
+        <EdgeLayout
+          Id="Package\Fact Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="217.028573598667,108.894118590833">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="193.942860704539,56.8941190284016"
+              Start="0,0"
+              End="193.942860704539,49.3941190284016">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.4470595142008" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.4470595142008"
+                    Point2="0,28.4470595142008"
+                    Point3="4,28.4470595142008" />
+                  <mssgle:LineSegment
+                    End="189.942860704539,28.4470595142008" />
+                  <mssgle:CubicBezierSegment
+                    Point1="189.942860704539,28.4470595142008"
+                    Point2="193.942860704539,28.4470595142008"
+                    Point3="193.942860704539,32.4470595142008" />
+                  <mssgle:LineSegment
+                    End="193.942860704539,49.3941190284016" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Data Flow Task.Paths[Lookup Match Output2]"
+          TopLeft="705.371439275936,423.952946538826">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-244.571434235086,66.494117861553"
+              Start="0,0"
+              End="-244.571434235086,58.994117861553">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.2470589307765" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.2470589307765"
+                    Point2="0,33.2470589307765"
+                    Point3="-4,33.2470589307765" />
+                  <mssgle:LineSegment
+                    End="-240.571434235086,33.2470589307765" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-240.571434235086,33.2470589307765"
+                    Point2="-244.571434235086,33.2470589307765"
+                    Point3="-244.571434235086,37.2470589307765" />
+                  <mssgle:LineSegment
+                    End="-244.571434235086,58.994117861553" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-170.477103836293,38.2470589307765,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Data Flow Task.Paths[Lookup Match Output1]"
+          TopLeft="633.257152442543,302.823533075326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.1142868333933,79.5294134635001"
+              Start="0,0"
+              End="72.1142868333933,72.0294134635001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.7647067317501" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.7647067317501"
+                    Point2="0,39.7647067317501"
+                    Point3="4,39.7647067317501" />
+                  <mssgle:LineSegment
+                    End="68.1142868333933,39.7647067317501" />
+                  <mssgle:CubicBezierSegment
+                    Point1="68.1142868333933,39.7647067317501"
+                    Point2="72.1142868333933,39.7647067317501"
+                    Point3="72.1142868333933,43.7647067317501" />
+                  <mssgle:LineSegment
+                    End="72.1142868333933,72.0294134635001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-12.1342433020534,44.7647067317501,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Data Flow Task.Paths[Lookup Match Output]"
+          TopLeft="410.971434303206,207.388237619235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="222.285718139337,53.835295456091"
+              Start="0,0"
+              End="222.285718139337,46.335295456091">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.9176477280455" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.9176477280455"
+                    Point2="0,26.9176477280455"
+                    Point3="4,26.9176477280455" />
+                  <mssgle:LineSegment
+                    End="218.285718139337,26.9176477280455" />
+                  <mssgle:CubicBezierSegment
+                    Point1="218.285718139337,26.9176477280455"
+                    Point2="222.285718139337,26.9176477280455"
+                    Point3="222.285718139337,30.9176477280455" />
+                  <mssgle:LineSegment
+                    End="222.285718139337,46.335295456091" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="62.9514723509185,31.9176477280455,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Data Flow Task\Director Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Director_Dim]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Data Flow Task\IMDB OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Data Flow Task\Movies Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Movie_Dim]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Data Flow Task\Actor Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Actor_Dim]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Data Flow Task\TopRatingDirectorActor_Fact OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

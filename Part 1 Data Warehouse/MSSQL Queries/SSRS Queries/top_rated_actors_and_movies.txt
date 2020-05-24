@@ -1,0 +1,7 @@
+SELECT a.ActorName, m.MovieName, MAX(f.max_rating) AS Max_Ratings
+FROM     [IMDB_DW_NEW].[dbo].[TopRatingDirectorActor_Fact] AS f INNER JOIN
+                  [IMDB_DW_NEW].[dbo].[Actor_Dim] AS a ON f.ActorKey = a.ActorKey INNER JOIN
+                  [IMDB_DW_NEW].[dbo].[Movie_Dim] AS m ON f.MovieKey = m.MovieKey
+WHERE  (f.max_rating > 9)
+GROUP BY m.MovieName, a.ActorName
+ORDER BY Max_Ratings DESC

@@ -1,0 +1,6 @@
+CREATE TABLE Actor_Dim (
+  ActorKey int PRIMARY KEY NOT NULL IDENTITY,
+  actor_id int,
+  ActedMoviesCount int,
+  ActorName nvarchar(100),
+  gender char(1))

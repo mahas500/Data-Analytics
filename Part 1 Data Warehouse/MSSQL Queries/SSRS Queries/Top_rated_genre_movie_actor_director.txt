@@ -1,0 +1,5 @@
+  select m.genre,f.num_movies,f.max_rating,m.MovieName,a.ActorName,d.DirectorName from [IMDB_DW_NEW].[dbo].[TopRartingDirectorActor_Fact] f
+  inner join [IMDB_DW_NEW].[dbo].[Director_Dim] d on f.DirectorKey=d.DirectorKey inner join 
+  [IMDB_DW_NEW].[dbo].[Actor_Dim] a on f.ActorKey=a.ActorKey inner join
+  [IMDB_DW_NEW].[dbo].[Movie_Dim] m on f.MovieKey=m.MovieKey where m.year=2004
+  group by d.DirectorName,a.ActorName,m.MovieName,m.genre,f.num_movies,f.max_rating

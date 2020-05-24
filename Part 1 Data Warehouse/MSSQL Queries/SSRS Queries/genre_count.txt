@@ -1,0 +1,4 @@
+SELECT genre, COUNT(genre) AS Total_Movies, MAX(Rating) AS Highest_Rating
+FROM     [IMDB_DW_NEW].[dbo].[Movie_Dim]
+GROUP BY genre
+ORDER BY Total_Movies DESC

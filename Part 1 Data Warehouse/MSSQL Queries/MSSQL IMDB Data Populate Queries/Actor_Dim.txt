@@ -1,0 +1,10 @@
+select r.actor_id,count(r.actor_id) as movies,concat(ac.first_name,' ',ac.last_name) as actor_name from [IMDB_New].[dbo].[roles] r 
+left join [IMDB_New].[dbo].[actors] ac on r.actor_id = ac.id where r.movie_id in(
+select output.x from (select a.id as x,a.name,a.rank,a.year,gn.genre from [IMDB_New].[dbo].[movies] a 
+left join [IMDB_New].[dbo].[movies_genres] gn on a.id = gn.movie_id
+ where a.name in(select m.name from [IMDB_New].[dbo].[movies] m left join [IMDB_New].[dbo].[movies_genres] mg 
+on m.id = mg.movie_id where m.rank is NOT NULL and mg.movie_id is NOT NULL and mg.genre is NOT NULL and m.year between 2000 and 2004
+group by m.name having COUNT(m.name)=1) and a.rank is NOT NULL and gn.movie_id is NOT NULL and gn.genre is NOT NULL 
+and name NOT LIKE '$%' AND name NOT LIKE '?%' AND name NOT LIKE '.%' AND name NOT LIKE '1%' 
+AND name NOT LIKE '4%' AND name NOT LIKE '3%' AND name NOT LIKE '6%')output  
+) group by r.actor_id,concat(ac.first_name,' ',ac.last_name),ac.gender

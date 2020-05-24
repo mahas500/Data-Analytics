@@ -1,0 +1,7 @@
+CREATE TABLE Movie_Dim (
+  MovieKey int PRIMARY KEY NOT NULL IDENTITY,
+  movie_id int,
+  MovieName nvarchar(255) DEFAULT NULL,
+  year int DEFAULT NULL,
+  Rating float DEFAULT NULL,
+  genre nvarchar(255) NOT NULL)

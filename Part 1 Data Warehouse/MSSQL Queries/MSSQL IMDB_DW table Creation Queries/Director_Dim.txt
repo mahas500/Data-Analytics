@@ -1,0 +1,6 @@
+CREATE TABLE Director_Dim (
+  DirectorKey int PRIMARY KEY NOT NULL IDENTITY,
+  director_id int,
+  DirectedMoviesCount int,
+  DirectorName nvarchar(100)
+  )

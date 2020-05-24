@@ -1,0 +1,20 @@
+CREATE TABLE TopRatingDirectorActor_Fact (
+ DirectorKey int,
+ MovieKey int,
+ ActorKey int,
+ num_movies int,
+ max_rating float DEFAULT NULL,
+
+CONSTRAINT fk1_eDirectorKey FOREIGN KEY (DirectorKey)
+
+REFERENCES Director_Dim(DirectorKey),
+
+CONSTRAINT fk2_eMovieKey FOREIGN KEY (MovieKey)
+
+REFERENCES Movie_Dim(MovieKey),
+
+CONSTRAINT fk4_eActorKey FOREIGN KEY (ActorKey)
+
+REFERENCES Actor_Dim(ActorKey), 
+
+PRIMARY KEY (DirectorKey, MovieKey, ActorKey))

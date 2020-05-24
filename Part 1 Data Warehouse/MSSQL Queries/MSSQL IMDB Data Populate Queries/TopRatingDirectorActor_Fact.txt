@@ -1,0 +1,24 @@
+select b.DirectorID,b.MovieID,b.ActorID,a.num_movies,a.max_rating from
+
+(select m.year, mg.genre,count(mg.movie_id) as num_movies,max(m.rank) as max_rating 
+from [IMDB_New].[dbo].[movies_genres] mg inner join [IMDB_New].[dbo].[movies] m 
+on mg.movie_id=m.id group by m.year,mg.genre)a 
+
+inner join 
+
+(select d.id as DirectorID,m.id as MovieID,ac.id as ActorID,m.year,m.rank,mg.genre,concat(d.first_name,' ',d.last_name) as director, 
+concat(ac.first_name,' ',ac.last_name) as actor, ac.gender as gender 
+from [IMDB_New].[dbo].[movies] m inner join [IMDB_New].[dbo].[movies_genres] mg 
+on mg.movie_id = m.id
+inner join [IMDB_New].[dbo].[movies_directors] md
+on mg.movie_id = md.movie_id
+inner join [IMDB_New].[dbo].[directors] d
+on md.director_id = d.id
+inner join [IMDB_New].[dbo].[roles] ro
+on m.id = ro.movie_id
+inner join [IMDB_New].[dbo].[actors] ac
+on ro.actor_id=ac.id where ro.role IS NOT NULL)b
+
+on a.year = b.year and a.max_rating = b.rank and a.genre = b.genre
+where b.rank!='' and b.director is NOT NULL and b.actor is NOT NULL order by a.num_movies 
+

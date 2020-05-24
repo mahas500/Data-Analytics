@@ -1,0 +1,497 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/16/2020 11:47:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MANIK"
+  DTS:CreatorName="Manik\Manik325"
+  DTS:DTSID="{D694D55A-3FAF-4C65-83FB-A3BB98CE238A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Movie_Dim"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{C3153ED2-8B3F-47CC-9567-F3C1AB76F936}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{1C5CA9AB-580A-4E29-95F3-283FE8FFCDEA}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\Data Analytics\Data Warehouse\Dimensions\MSSQL Dimensions\movie_new_dim_source.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{730DE7DB-E42E-4486-9FD1-36D5DF2F7C9C}"
+      DTS:ObjectName="MANIK\SQLEXPRESS.IMDB_DW_NEW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=MANIK\SQLEXPRESS;Initial Catalog=IMDB_DW_NEW;Integrated Security=True;Application Name=SSIS-Movie_Dim-{730DE7DB-E42E-4486-9FD1-36D5DF2F7C9C}MANIK\SQLEXPRESS.IMDB_DW_NEW;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Movie_Dim Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F3AC8294-4104-4D22-B013-DDF0CB2282AD}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Movie_Dim Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Movie_Dim ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Movie_Dim"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW]"
+                  connectionManagerRefId="Package.ConnectionManagers[MANIK\SQLEXPRESS.IMDB_DW_NEW]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[MovieKey]"
+                      cachedDataType="r8"
+                      cachedName="MovieKey"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[MovieKey]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[MovieKey]" />
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[year]"
+                      cachedDataType="r8"
+                      cachedName="year"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[year]" />
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[genre]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="genre"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[genre]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[genre]" />
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[id]"
+                      cachedDataType="r8"
+                      cachedName="id"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[movie_id]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[MovieName]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].Columns[rank]"
+                      cachedDataType="r8"
+                      cachedName="rank"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Rating]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[rank]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[MovieKey]"
+                      dataType="i4"
+                      name="MovieKey" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[movie_id]"
+                      dataType="i4"
+                      name="movie_id" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[MovieName]"
+                      dataType="wstr"
+                      length="255"
+                      name="MovieName" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[year]"
+                      dataType="i4"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Rating]"
+                      dataType="r8"
+                      name="Rating" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[genre]"
+                      dataType="wstr"
+                      length="255"
+                      name="genre" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Movie_Dim Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">movie_new_dim$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[MovieKey]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[MovieKey]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[MovieKey]"
+                      name="MovieKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[id]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      length="255"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[rank]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[rank]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[rank]"
+                      name="rank"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[year]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[year]"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[year]"
+                      name="year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[genre]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[genre]"
+                      length="255"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].Columns[genre]"
+                      name="genre"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[MovieKey]"
+                      dataType="r8"
+                      name="MovieKey" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[id]"
+                      dataType="r8"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[rank]"
+                      dataType="r8"
+                      name="rank" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output].ExternalColumns[genre]"
+                      dataType="wstr"
+                      length="255"
+                      name="genre" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[MovieKey]"
+                      dataType="r8"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[MovieKey]"
+                      name="MovieKey" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[id]"
+                      dataType="r8"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      name="name" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[rank]"
+                      dataType="r8"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[rank]"
+                      name="rank" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[year]"
+                      dataType="r8"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[year]"
+                      name="year" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[genre]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[genre]"
+                      name="genre" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Movie_Dim Data Flow Task.Paths[Excel Source Output]"
+              endId="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="206.4,41.6"
+          Id="Package\Movie_Dim Data Flow Task"
+          TopLeft="188.000003201621,116.847060462265" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Movie_Dim Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="233.6,41.6"
+          Id="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination"
+          TopLeft="443.428578980115,216.564708919591" />
+        <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source"
+          TopLeft="134.857145153746,82.5882364523865" />
+        <EdgeLayout
+          Id="Package\Movie_Dim Data Flow Task.Paths[Excel Source Output]"
+          TopLeft="231.657145153746,124.188236452386">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="328.571433826369,92.3764724672045"
+              Start="0,0"
+              End="328.571433826369,84.8764724672045">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.1882362336023" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.1882362336023"
+                    Point2="0,46.1882362336023"
+                    Point3="4,46.1882362336023" />
+                  <mssgle:LineSegment
+                    End="324.571433826369,46.1882362336023" />
+                  <mssgle:CubicBezierSegment
+                    Point1="324.571433826369,46.1882362336023"
+                    Point2="328.571433826369,46.1882362336023"
+                    Point3="328.571433826369,50.1882362336023" />
+                  <mssgle:LineSegment
+                    End="328.571433826369,84.8764724672045" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Movie_Dim Data Flow Task\Movie_Dim Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Movie_Dim Data Flow Task\Movie_Dim ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

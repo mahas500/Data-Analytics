@@ -1,0 +1,5 @@
+select a.ActorName,m.year,m.MovieName from [IMDB_DW_NEW].[dbo].[Actor_Dim] a 
+inner join [IMDB_DW_NEW].[dbo].[TopRatingDirectorActor_Fact] f on a.ActorKey=f.ActorKey
+inner join [IMDB_DW_NEW].[dbo].[Movie_Dim] m on f.MovieKey=m.MovieKey 
+where a.gender='F' and m.year between 2000 and 2004 and m.genre='Drama'
+group by m.MovieName,m.year,a.ActorName
